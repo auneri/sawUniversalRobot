@@ -121,6 +121,7 @@ struct packet_310_311 : packet_35_39 {
 
 CMN_IMPLEMENT_SERVICES_DERIVED_ONEARG(mtsUniversalRobotScriptRT, mtsTaskContinuous, mtsTaskContinuousConstructorArg)
 
+// values obtained from the excel sheet in https://www.universal-robots.com/articles/ur/interface-communication/remote-control-via-tcpip/
 unsigned long mtsUniversalRobotScriptRT::PacketLength[VER_MAX] = {
        0,  // VER_UNKNOWN
      764,  // VER_PRE_18
@@ -128,7 +129,8 @@ unsigned long mtsUniversalRobotScriptRT::PacketLength[VER_MAX] = {
     1044,  // VER_30_31
     1060,  // VER_32_34
     1108,  // VER_35_39
-    1116   // VER_310_311
+    1116,  // VER_310_313
+    1140   // VER_314_315
 };
 
 
@@ -151,7 +153,7 @@ std::string mtsUniversalRobotScriptRT::RobotModeName(int mode, int version)
         else
             str.assign("INVALID");
     }
-    else if ((version >= VER_30_31) && (version <= VER_310_311)) {
+    else if ((version >= VER_30_31) && (version <= VER_314_315)) {
         // Controller Box 3 (CB3), also includes CB3.1
         if ((mode >= ROBOT_MODE_DISCONNECTED) && (mode <= ROBOT_MODE_UPDATING_FIRMWARE))
             str.assign(namesCB3[mode]);
