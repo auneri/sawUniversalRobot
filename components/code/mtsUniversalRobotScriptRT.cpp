@@ -130,7 +130,8 @@ unsigned long mtsUniversalRobotScriptRT::PacketLength[VER_MAX] = {
     1060,  // VER_32_34
     1108,  // VER_35_39
     1116,  // VER_310_313
-    1140   // VER_314_315
+    1140,  // VER_314_315
+    1220   // VER_POST_315
 };
 
 
@@ -153,7 +154,7 @@ std::string mtsUniversalRobotScriptRT::RobotModeName(int mode, int version)
         else
             str.assign("INVALID");
     }
-    else if ((version >= VER_30_31) && (version <= VER_314_315)) {
+    else if ((version >= VER_30_31) && (version < VER_MAX)) {
         // Controller Box 3 (CB3), also includes CB3.1
         if ((mode >= ROBOT_MODE_DISCONNECTED) && (mode <= ROBOT_MODE_UPDATING_FIRMWARE))
             str.assign(namesCB3[mode]);
@@ -644,6 +645,7 @@ void mtsUniversalRobotScriptRT::Run(void)
         }
     }
     else {
+        CMN_LOG_CLASS_RUN_WARNING << "Current package length is " << packageLength << " bytes" << std::endl;
         buffer_idx = 0;
         PacketInvalid(vctULong2(numBytes, packageLength));
         mInterface->SendError(this->GetName() + ": invalid package");
