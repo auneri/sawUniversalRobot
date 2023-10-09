@@ -227,6 +227,8 @@ protected:
 
     void GetPolyscopeVersion(std::string &pver);
 
+    void SendCommand(const std::string &command);
+
     // Connection Parameters
     // IP address (TCP/IP)
     std::string ipAddress;

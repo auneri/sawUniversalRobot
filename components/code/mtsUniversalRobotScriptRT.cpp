@@ -354,6 +354,7 @@ void mtsUniversalRobotScriptRT::Init(void)
         mInterface->AddCommandWrite(&mtsUniversalRobotScriptRT::SetToolVoltage, this, "SetToolVoltage");
         mInterface->AddCommandWrite(&mtsUniversalRobotScriptRT::ShowPopup, this, "ShowPopup");
         mInterface->AddCommandWrite(&mtsUniversalRobotScriptRT::SendToDashboardServer, this, "SendToDashboardServer");
+        mInterface->AddCommandWrite(&mtsUniversalRobotScriptRT::SendCommand, this, "SendCommand");
 
         mInterface->AddEventVoid(SocketErrorEvent, "SocketError");
         mInterface->AddEventVoid(RobotNotReadyEvent, "RobotNotReady");
@@ -1114,4 +1115,11 @@ void mtsUniversalRobotScriptRT::GetPolyscopeVersion(std::string &pver)
         pversion.bugfix = atoi(strings[2].c_str());
         std::cout << "major = " << strings[0].c_str() << "  minor = " << strings[1] << "  bugfix = " << strings[2] << "\n";
     }
+}
+
+void mtsUniversalRobotScriptRT::SendCommand(const std::string &command)
+{
+    std::string buf(command + "\n");
+    if (socket.Send(buf) == -1)
+        SocketError();
 }
